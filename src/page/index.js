@@ -12,6 +12,7 @@ import ResepPage from "./resep.page";
 import DetailPegawaiPage from "./detailPegawai.page";
 import DetailPasienPage from "./detailPasien.page";
 import DetailProfesiPage from "./detailProfesi.page";
+import KebijakanPrivasiPage from "./kebijakanPrivase.page";
 
 export {
   HomePage,
@@ -28,4 +29,5 @@ export {
   DetailPegawaiPage,
   DetailPasienPage,
   DetailProfesiPage,
+  KebijakanPrivasiPage,
 };

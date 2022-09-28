@@ -15,6 +15,7 @@ import {
   DetailPegawaiPage,
   DetailPasienPage,
   DetailProfesiPage,
+  KebijakanPrivasiPage,
 } from "./page";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -52,6 +53,11 @@ function App() {
         <Route path="/detailprofesi" exact element={<DetailProfesiPage />} />
         <Route path="/tambahprofesi" exact element={<DetailProfesiPage />} />
       </Route>
+      <Route
+        path="/kebijakanprivasi"
+        exact
+        element={<KebijakanPrivasiPage />}
+      />
       <Route
         path="*"
         element={

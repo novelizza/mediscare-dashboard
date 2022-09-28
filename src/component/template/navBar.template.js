@@ -132,6 +132,15 @@ function NavBarTemplate(props) {
           </button>
         </div>
       </div>
+      <div className="flex flex-col h-full justify-end pb-5 text-GROUND_COLOR">
+        <button
+          onClick={() => {
+            navigate("/kebijakanprivasi");
+          }}
+        >
+          <span>Kebijakan Privasi</span>
+        </button>
+      </div>
     </div>
   );
 }
