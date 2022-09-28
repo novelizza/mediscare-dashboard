@@ -63,11 +63,11 @@ function DetailPasienTemplate(props) {
             <img
               src={
                 props.data === undefined
-                  ? "http://localhost:4000/api/avatar/unknownPict.png"
+                  ? getUrlBase + "avatar/unknownPict.png"
                   : props.data.avatar === null ||
                     props.data.avatar === undefined
-                  ? "http://localhost:4000/api/avatar/unknownPict.png"
-                  : "http://localhost:4000/api/" + props.data.avatar
+                  ? getUrlBase + "avatar/unknownPict.png"
+                  : getUrlBase + "" + props.data.avatar
               }
               alt="Avatar"
               className="w-36 h-36 rounded-full"
