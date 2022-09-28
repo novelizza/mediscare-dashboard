@@ -1,5 +1,10 @@
 import { atom } from "recoil";
 
+const urlBase = atom({
+  key: "baseUrl",
+  default: "https://api.mediscare.my.id/",
+});
+
 const activePage = atom({
   key: "pageActive",
   default: "Pesanan",
@@ -46,6 +51,7 @@ const dataRekamMedis = atom({
 });
 
 export {
+  urlBase,
   activePage,
   idPesanan,
   idPasien,

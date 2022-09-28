@@ -2,7 +2,7 @@ import React from "react";
 import { DetailPegawaiTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { idPegawai, refresh, activePage } from "../store";
+import { idPegawai, refresh, activePage, urlBase } from "../store";
 
 function DetailPegawaiPage() {
   const [dataDetailPegawai, setDataDetailPegawai] = React.useState({
@@ -11,6 +11,7 @@ function DetailPegawaiPage() {
   const [id_pegawai, setId_pegawai] = useRecoilState(idPegawai);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
   const [page, setPage] = useRecoilState(activePage);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7",
@@ -48,9 +49,9 @@ function DetailPegawaiPage() {
       return request;
     }
     if (page !== "Tambah Pegawai") {
-      fetchDataPesanan("http://localhost:4000/api/pegawai/" + id_pegawai);
+      fetchDataPesanan(getUrlBase + "pegawai/" + id_pegawai);
     } else {
-      fetchDataPesanan("http://localhost:4000/api/kerjaan/all");
+      fetchDataPesanan(getUrlBase + "kerjaan/all");
     }
   }, [getRefresh]);
 

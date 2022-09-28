@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage, refresh } from "../../store";
+import { activePage, refresh, urlBase } from "../../store";
 import axios from "axios";
 import { ItemListResepOrganism } from "../organism";
 
@@ -8,6 +8,7 @@ function ObatTemplate(props) {
   const [stateUbah, setStateUbah] = React.useState(false);
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const [dataResep, setDataResep] = React.useState({
     nama: "",
@@ -32,7 +33,7 @@ function ObatTemplate(props) {
     newData.append("cara_penggunaan", dataResep.cara_penggunaan);
 
     const request = await axios
-      .post("http://localhost:4000/api/resep/", newData, {
+      .post(getUrlBase + "resep/", newData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           session: localStorage.getItem("session"),

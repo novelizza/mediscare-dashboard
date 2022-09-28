@@ -4,13 +4,15 @@ import {
   NavBarTemplate,
 } from "../component/template";
 import { useRecoilState } from "recoil";
-import { idPesanan, refresh, activePage } from "../store";
+import { idPesanan, refresh, activePage, urlBase } from "../store";
 import axios from "axios";
 
 function MasukanRekamMedisPage() {
   const [id_pesanan, setId_pesanan] = useRecoilState(idPesanan);
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
+
   const [dataPemeriksaan, setDataPemeriksaan] = React.useState({});
 
   const styleMasukkanRekamMedis = {
@@ -48,7 +50,7 @@ function MasukanRekamMedisPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/pemeriksaan/" + id_pesanan, {
+        .get(getUrlBase + "pemeriksaan/" + id_pesanan, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

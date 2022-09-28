@@ -1,9 +1,12 @@
 import React from "react";
 import { RekamMedisTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { urlBase } from "../store";
 
 function RekamMedisPage() {
   const [dataPasien, setDataPasien] = React.useState([]);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7",
@@ -24,7 +27,7 @@ function RekamMedisPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/pasien/all", {
+        .get(getUrlBase + "pasien/all", {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

@@ -5,6 +5,7 @@ import {
   dataRekamMedisPesanan,
   refresh,
   dataRekamMedis,
+  urlBase,
 } from "../../store";
 import moment from "moment";
 import axios from "axios";
@@ -23,6 +24,7 @@ function MasukanRekamMedisTemplate(props) {
   });
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const [getDataRekamMedisPesanan, setDataRekamMedisPesanan] = useRecoilState(
     dataRekamMedisPesanan
   );
@@ -150,16 +152,12 @@ function MasukanRekamMedisTemplate(props) {
     newData.append("alergi", dataPemeriksaan.alergi);
 
     const request = await axios
-      .put(
-        "http://localhost:4000/api/pemeriksaan/" + props.id_pesanan,
-        newData,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            session: localStorage.getItem("session"),
-          },
-        }
-      )
+      .put(getUrlBase + "pemeriksaan/" + props.id_pesanan, newData, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          session: localStorage.getItem("session"),
+        },
+      })
       .then((res) => {
         alert(res.data.result);
         setStateUbah(true);

@@ -1,8 +1,14 @@
 import React from "react";
 import { ProfesiTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { urlBase } from "../store";
 
 function ProfesiPage() {
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
+
+  const [dataProfesi, setDataProfesi] = React.useState([]);
+
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7",
     dasarPesanan:
@@ -19,12 +25,10 @@ function ProfesiPage() {
       "flex flex-row w-full bg-THEME_COLOR py-4 pl-4 text-GROUND_COLOR rounded-tr-full",
   };
 
-  const [dataProfesi, setDataProfesi] = React.useState([]);
-
   React.useEffect(() => {
     async function fetchDataAccount() {
       const request = await axios
-        .get("http://localhost:4000/api/kerjaan/all", {
+        .get(getUrlBase + "kerjaan/all", {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

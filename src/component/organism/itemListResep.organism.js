@@ -1,14 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { refresh } from "../../store";
+import { refresh, urlBase } from "../../store";
 
 function ItemListResep(props) {
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   async function hapusObat() {
     const request = await axios
-      .delete("http://localhost:4000/api/resep/" + props.data.id_resep, {
+      .delete(getUrlBase + "resep/" + props.data.id_resep, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           session: localStorage.getItem("session"),

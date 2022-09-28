@@ -4,12 +4,13 @@ import {
   NavBarTemplate,
 } from "../component/template";
 import axios from "axios";
-import { idPasien } from "../store";
+import { idPasien, urlBase } from "../store";
 import { useRecoilState } from "recoil";
 
 function RekamMedisPasienPage() {
   const [dataPemeriksaan, setDataPemeriksaan] = React.useState([]);
   const [getIdPasien, setIdPasien] = useRecoilState(idPasien);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7",
@@ -30,7 +31,7 @@ function RekamMedisPasienPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/pesanan/all/" + getIdPasien, {
+        .get(getUrlBase + "pesanan/all/" + getIdPasien, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

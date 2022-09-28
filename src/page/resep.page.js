@@ -1,13 +1,14 @@
 import React from "react";
 import { ResepTemplate, NavBarTemplate } from "../component/template";
 import { useRecoilState } from "recoil";
-import { refresh, activePage, dataRekamMedis } from "../store";
+import { refresh, activePage, dataRekamMedis, urlBase } from "../store";
 import axios from "axios";
 
 function ResepPage() {
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
   const [getDataRekamMedis, setDataRekamMedis] = useRecoilState(dataRekamMedis);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const [dataResep, setDataResep] = React.useState([]);
 
@@ -46,16 +47,12 @@ function ResepPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get(
-          "http://localhost:4000/api/resep/all/" +
-            getDataRekamMedis.id_pemeriksaan,
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              session: localStorage.getItem("session"),
-            },
-          }
-        )
+        .get(getUrlBase + "resep/all/" + getDataRekamMedis.id_pemeriksaan, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            session: localStorage.getItem("session"),
+          },
+        })
         .then((res) => {
           setDataResep(res.data.result);
         })

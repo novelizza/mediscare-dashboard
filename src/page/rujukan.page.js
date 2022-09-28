@@ -1,13 +1,14 @@
 import React from "react";
 import { RujukanTemplate, NavBarTemplate } from "../component/template";
 import { useRecoilState } from "recoil";
-import { refresh, activePage, dataRekamMedis } from "../store";
+import { refresh, activePage, dataRekamMedis, urlBase } from "../store";
 import axios from "axios";
 
 function RujukanPage() {
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
   const [getDataRekamMedis, setDataRekamMedis] = useRecoilState(dataRekamMedis);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const [dataRujuk, setDataRujuk] = React.useState({
     dataPegawai: {},
@@ -49,15 +50,12 @@ function RujukanPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get(
-          "http://localhost:4000/api/rujuk/" + getDataRekamMedis.id_pemeriksaan,
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              session: localStorage.getItem("session"),
-            },
-          }
-        )
+        .get(getUrlBase + "rujuk/" + getDataRekamMedis.id_pemeriksaan, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            session: localStorage.getItem("session"),
+          },
+        })
         .then((res) => {
           setDataRujuk(res.data.result);
         })

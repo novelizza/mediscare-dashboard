@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage, refresh } from "../../store";
+import { activePage, refresh, urlBase } from "../../store";
 import moment from "moment";
 import EyeFillIcon from "remixicon-react/EyeFillIcon";
 import EyeOffFillIcon from "remixicon-react/EyeOffFillIcon";
@@ -31,6 +31,7 @@ function DetailPegawaiTemplate(props) {
   const hiddenFileInput = React.useRef(null);
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const [tambahPegawai, setTambahPegawai] = React.useState(
     page === "Tambah Pegawai" ? true : false
   );
@@ -121,7 +122,7 @@ function DetailPegawaiTemplate(props) {
     newData.append("avatar", ava);
 
     const request = await axios
-      .put("http://localhost:4000/api/pegawai/avatar", newData, {
+      .put(getUrlBase + "pegawai/avatar", newData, {
         headers: {
           "Content-Type": "multipart/form-data",
           session: localStorage.getItem("session"),
@@ -174,10 +175,10 @@ function DetailPegawaiTemplate(props) {
             <img
               src={
                 props.data.dataPegawai === undefined
-                  ? "http://localhost:4000/api/avatar/unknownPict.png"
+                  ? getUrlBase + "avatar/unknownPict.png"
                   : props.data.dataPegawai.avatar === null
-                  ? "http://localhost:4000/api/avatar/unknownPict.png"
-                  : "http://localhost:4000/api/" + props.data.dataPegawai.avatar
+                  ? getUrlBase + "avatar/unknownPict.png"
+                  : getUrlBase + "" + props.data.dataPegawai.avatar
               }
               alt="Avatar"
               className="w-40 h-40 mb-1 rounded-full"
@@ -603,13 +604,9 @@ function DetailPegawaiTemplate(props) {
             }
             onClick={() => {
               tambahPegawai
-                ? ubahBuatData(
-                    "http://localhost:4000/api/pegawai",
-                    tambahPegawai
-                  )
+                ? ubahBuatData(getUrlBase + "pegawai", tambahPegawai)
                 : ubahBuatData(
-                    "http://localhost:4000/api/pegawai/" +
-                      props.data.dataPegawai.id_pegawai,
+                    getUrlBase + "pegawai/" + props.data.dataPegawai.id_pegawai,
                     tambahPegawai
                   );
             }}

@@ -1,13 +1,14 @@
 import axios from "axios";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage } from "../../store";
+import { activePage, urlBase } from "../../store";
 import { ItemListPasienOrganism } from "../organism";
 
 function PasienTemplate(props) {
   const [dataCari, setDataCari] = React.useState("");
   const [hasilData, setHasilData] = React.useState([]);
   const [page, setPage] = useRecoilState(activePage);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const [isSearch, setIsSearch] = React.useState(false);
 
   React.useEffect(() => {
@@ -16,7 +17,7 @@ function PasienTemplate(props) {
       newData.append("nama", dataCari);
       async function fetchDataPasien() {
         const request = await axios
-          .post("http://localhost:4000/api/pasien/search", newData, {
+          .post(getUrlBase + "pasien/search", newData, {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
               session: localStorage.getItem("session"),

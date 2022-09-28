@@ -1,7 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage, refresh } from "../../store";
-import { idPasien } from "../../store";
+import { activePage, refresh, idPasien, urlBase } from "../../store";
 import moment from "moment";
 import axios from "axios";
 
@@ -9,6 +8,7 @@ function DetailPasienTemplate(props) {
   const [page, setPage] = useRecoilState(activePage);
   const [id_pasien, setId_pasien] = useRecoilState(idPasien);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const [state, setState] = React.useState(false);
   const [noRM, setNoRm] = React.useState("");
@@ -18,7 +18,7 @@ function DetailPasienTemplate(props) {
     dataNoRM.append("no_rm", noRM);
 
     const request = await axios
-      .put("http://localhost:4000/api/pasien/" + id_pasien, dataNoRM, {
+      .put(getUrlBase + "pasien/" + id_pasien, dataNoRM, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           session: localStorage.getItem("session"),

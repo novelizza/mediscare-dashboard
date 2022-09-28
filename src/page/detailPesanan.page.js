@@ -2,7 +2,7 @@ import React from "react";
 import { DetailPesananTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { idPesanan, refresh, dataRekamMedisPesanan } from "../store";
+import { idPesanan, refresh, dataRekamMedisPesanan, urlBase } from "../store";
 
 function DetailPesananPage() {
   const [dataDetailPesanan, setDataDetailPesanan] = React.useState({
@@ -16,6 +16,7 @@ function DetailPesananPage() {
   const [getDataRekamMedisPesanan, setDataRekamMedisPesanan] = useRecoilState(
     dataRekamMedisPesanan
   );
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7 rounded-br-full",
@@ -36,7 +37,7 @@ function DetailPesananPage() {
   React.useEffect(() => {
     async function fetchDataPegawai() {
       const request = await axios
-        .get("http://localhost:4000/api/pegawai/all", {
+        .get(getUrlBase + "pegawai/all", {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),
@@ -50,7 +51,7 @@ function DetailPesananPage() {
     }
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/pesanan/" + id_pesanan, {
+        .get(getUrlBase + "pesanan/" + id_pesanan, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

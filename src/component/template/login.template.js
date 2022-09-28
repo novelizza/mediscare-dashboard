@@ -2,10 +2,13 @@ import React from "react";
 import { logo2 } from "../../asset/image";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { urlBase } from "../../store";
 
 function LoginTemplate(props) {
   const navigate = useNavigate();
 
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const [auth, setAuth] = React.useState({
     username: "",
     password: "",
@@ -13,7 +16,7 @@ function LoginTemplate(props) {
 
   async function fetchDataAccount() {
     const request = await axios
-      .get("http://localhost:4000/api/pegawai", {
+      .get(getUrlBase + "pegawai", {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           session: localStorage.getItem("session"),
@@ -39,7 +42,7 @@ function LoginTemplate(props) {
       newData.append("username", auth.username);
       newData.append("password", auth.password);
       const request = await axios
-        .post("http://localhost:4000/api/auth", newData, {
+        .post(getUrlBase + "auth", newData, {
           params: {
             who: "pegawai",
           },

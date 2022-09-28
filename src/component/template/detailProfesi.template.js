@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage, refresh, idProfesi } from "../../store";
+import { activePage, refresh, idProfesi, urlBase } from "../../store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,7 @@ function DetailProfesiTemplate(props) {
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
   const [id_profesi, setId_profesi] = useRecoilState(idProfesi);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const onChange = (type, value) => {
     setData({
@@ -30,7 +31,7 @@ function DetailProfesiTemplate(props) {
 
     async function fetchDataTambah() {
       const requestTambah = await axios
-        .post("http://localhost:4000/api/kerjaan", newData, {
+        .post(getUrlBase + "kerjaan", newData, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),
@@ -50,7 +51,7 @@ function DetailProfesiTemplate(props) {
 
     async function fetchDataUbah() {
       const requestTambah = await axios
-        .put("http://localhost:4000/api/kerjaan/" + id_profesi, newData, {
+        .put(getUrlBase + "kerjaan/" + id_profesi, newData, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

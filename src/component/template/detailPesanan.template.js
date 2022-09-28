@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage, refresh } from "../../store";
+import { activePage, refresh, urlBase } from "../../store";
 import moment from "moment";
 import WhatsappFillIcon from "remixicon-react/WhatsappFillIcon";
 import axios from "axios";
@@ -17,6 +17,7 @@ function DetailPesananTemplate(props) {
   const [stateUbah, setStateUbah] = React.useState("Menunggu");
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const date = props.data.dataPesanan.createdAt;
   var now = moment.utc(date, "YYYY-MM-DDTHH:mm:ssZ").format("DD-MM-YYYY");
@@ -52,8 +53,7 @@ function DetailPesananTemplate(props) {
     newData.append("status_pesanan", "Terjadwalkan");
     const request = await axios
       .put(
-        "http://localhost:4000/api/pesanan/" +
-          props.data.dataPesanan.id_pesanan,
+        getUrlBase + "pesanan/" + props.data.dataPesanan.id_pesanan,
         newData,
         {
           headers: {
@@ -81,7 +81,8 @@ function DetailPesananTemplate(props) {
     }
     const request = await axios
       .put(
-        "http://localhost:4000/api/pesanan/batalselesai/" +
+        getUrlBase +
+          "pesanan/batalselesai/" +
           props.data.dataPesanan.id_pesanan,
         stateBatal,
         {

@@ -1,6 +1,11 @@
 import React from "react";
 import moment from "moment";
-import { activePage, idPesanan, dataRekamMedisPesanan } from "../../store";
+import {
+  activePage,
+  idPesanan,
+  dataRekamMedisPesanan,
+  urlBase,
+} from "../../store";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,6 +18,7 @@ function ItemListPesananOrganism(props) {
   const [getDataRekamMedisPesanan, setDataRekamMedisPesanan] = useRecoilState(
     dataRekamMedisPesanan
   );
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const [where, setWhere] = React.useState(false);
 
   const date = props.dataPesanan.createdAt;
@@ -20,7 +26,7 @@ function ItemListPesananOrganism(props) {
 
   async function fetchDataPesanan(id) {
     const request = await axios
-      .get("http://localhost:4000/api/pesanan/" + id, {
+      .get(getUrlBase + "pesanan/" + id, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           session: localStorage.getItem("session"),

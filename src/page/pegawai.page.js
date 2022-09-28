@@ -1,8 +1,12 @@
 import React from "react";
 import { PegawaiTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { urlBase } from "../store";
 
 function PegawaiPage() {
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
+
   const [dataPegawai, setDataPegawai] = React.useState([]);
   const [dataProfesi, setDataProfesi] = React.useState("");
   const style = {
@@ -24,7 +28,7 @@ function PegawaiPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/pegawai/all", {
+        .get(getUrlBase + "pegawai/all", {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

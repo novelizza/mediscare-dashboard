@@ -1,6 +1,11 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage, refresh, dataRekamMedisPesanan } from "../../store";
+import {
+  activePage,
+  refresh,
+  dataRekamMedisPesanan,
+  urlBase,
+} from "../../store";
 import axios from "axios";
 import moment from "moment";
 
@@ -8,6 +13,7 @@ function RujukanTemplate(props) {
   const [stateUbah, setStateUbah] = React.useState(false);
   const [page, setPage] = useRecoilState(activePage);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const [getDataRekamMedisPesanan, setDataRekamMedisPesanan] = useRecoilState(
     dataRekamMedisPesanan
   );
@@ -49,7 +55,7 @@ function RujukanTemplate(props) {
     newData.append("alasan", dataRujuk.alasan);
 
     const request = await axios
-      .put("http://localhost:4000/api/rujuk/" + props.id_pemeriksaan, newData, {
+      .put(getUrlBase + "rujuk/" + props.id_pemeriksaan, newData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           session: localStorage.getItem("session"),

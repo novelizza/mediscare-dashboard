@@ -2,12 +2,13 @@ import React from "react";
 import { DetailProfesiTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { idProfesi, refresh } from "../store";
+import { idProfesi, refresh, urlBase } from "../store";
 
 function DetailProfesiPage() {
   const [dataDetailProfesi, setDataDetailProfesi] = React.useState({});
   const [id_profesi, setId_profesi] = useRecoilState(idProfesi);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7",
@@ -29,7 +30,7 @@ function DetailProfesiPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/kerjaan/" + id_profesi, {
+        .get(getUrlBase + "kerjaan/" + id_profesi, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

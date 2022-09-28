@@ -1,14 +1,18 @@
 import React from "react";
 import { logoMitra } from "../../asset/image";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { urlBase } from "../../store";
 
 const CetakRMTemplate = React.forwardRef((props, ref) => {
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
+
   const [dataResep, setDataResep] = React.useState([]);
 
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/resep/all/" + props.id.id_pemeriksaan, {
+        .get(getUrlBase + "resep/all/" + props.id.id_pemeriksaan, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),
@@ -16,7 +20,6 @@ const CetakRMTemplate = React.forwardRef((props, ref) => {
         })
         .then((res) => {
           setDataResep(res.data.result);
-          console.log(res.data.result);
         })
         .catch((er) => console.log("Error: ", er));
       return request;

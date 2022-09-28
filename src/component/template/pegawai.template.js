@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { activePage } from "../../store";
+import { activePage, urlBase } from "../../store";
 import axios from "axios";
 import { ItemListPegawaiOrganism } from "../organism";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ function PegawaiTemplate(props) {
   const navigate = useNavigate();
 
   const [page, setPage] = useRecoilState(activePage);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const [dataCari, setDataCari] = React.useState("");
   const [hasilData, setHasilData] = React.useState([]);
   const [isSearch, setIsSearch] = React.useState(false);
@@ -17,7 +18,7 @@ function PegawaiTemplate(props) {
     const delayRequest = setTimeout(() => {
       async function fetchDataPegawai() {
         const request = await axios
-          .get("http://localhost:4000/api/pegawai/search/" + dataCari, {
+          .get(getUrlBase + "pegawai/search/" + dataCari, {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
               session: localStorage.getItem("session"),

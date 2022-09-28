@@ -1,9 +1,12 @@
 import React from "react";
 import { HomeTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { urlBase } from "../store";
 
 function HomePage() {
   const [dataPesanan, setDataPesanan] = React.useState([]);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7 rounded-br-full",
@@ -24,7 +27,7 @@ function HomePage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/pesanan/all", {
+        .get(getUrlBase + "pesanan/all", {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

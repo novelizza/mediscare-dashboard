@@ -2,12 +2,13 @@ import React from "react";
 import { DetailPasienTemplate, NavBarTemplate } from "../component/template";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { idPasien, refresh } from "../store";
+import { idPasien, refresh, urlBase } from "../store";
 
 function DetailPasienPage() {
   const [dataDetailPasien, setDataDetailPasien] = React.useState({});
   const [id_pasien, setId_pasien] = useRecoilState(idPasien);
   const [getRefresh, setRefresh] = useRecoilState(refresh);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
 
   const style = {
     dasarAtas: "bg-THEME_COLOR py-7",
@@ -28,7 +29,7 @@ function DetailPasienPage() {
   React.useEffect(() => {
     async function fetchDataPesanan() {
       const request = await axios
-        .get("http://localhost:4000/api/pasien/" + id_pasien, {
+        .get(getUrlBase + "pasien/" + id_pasien, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             session: localStorage.getItem("session"),

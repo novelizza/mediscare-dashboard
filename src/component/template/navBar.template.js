@@ -8,17 +8,18 @@ import HealthBookFillIcon from "remixicon-react/HealthBookFillIcon";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { activePage } from "../../store";
+import { activePage, urlBase } from "../../store";
 
 function NavBarTemplate(props) {
   const navigate = useNavigate();
 
   const [page, setPage] = useRecoilState(activePage);
+  const [getUrlBase, setUrlBase] = useRecoilState(urlBase);
   const dataPegawai = JSON.parse(localStorage.getItem("dataPegawai"));
 
   async function logout() {
     const request = await axios
-      .delete("http://localhost:4000/api/auth", {
+      .delete(getUrlBase + "auth", {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           session: localStorage.getItem("session"),
@@ -46,10 +47,10 @@ function NavBarTemplate(props) {
       <img
         src={
           dataPegawai.avatar === undefined
-            ? "http://localhost:4000/api/avatar/unknownPict.png"
+            ? getUrlBase + "avatar/unknownPict.png"
             : dataPegawai.avatar === null
-            ? "http://localhost:4000/api/avatar/unknownPict.png"
-            : "http://localhost:4000/api/" + dataPegawai.avatar
+            ? getUrlBase + "avatar/unknownPict.png"
+            : getUrlBase + "" + dataPegawai.avatar
         }
         alt="Avatar"
         className="w-28 h-28 mt-7 mb-1 rounded-full"
