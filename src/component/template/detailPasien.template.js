@@ -35,6 +35,7 @@ function DetailPasienTemplate(props) {
 
   React.useEffect(() => {
     setNoRm(props.data.no_rm);
+    console.log(props.data.no_rm);
   }, [props.data.no_rm]);
 
   return (
@@ -43,14 +44,19 @@ function DetailPasienTemplate(props) {
         <span className="font-semibold text-4xl text-THEME_COLOR">{page}</span>
         <div className="flex flex-row h-full w-fit">
           <button
-            className={"bg-THEME_COLOR text-GROUND_COLOR px-3 rounded-md"}
+            className={`${
+              props.data.no_rm !== undefined ? "bg-THEME_COLOR" : "bg-gray-500"
+            } text-GROUND_COLOR px-3 rounded-md`}
             onClick={() => {
               if (state) {
                 tambahNoRekamMedis();
               } else {
-                setState(true);
+                if (props.data.no_rm !== undefined) {
+                  setState(true);
+                }
               }
             }}
+            disabled={props.data.no_rm === undefined ? true : false}
           >
             {state ? "Simpan" : "Tambah No. RM"}
           </button>
