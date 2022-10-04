@@ -150,14 +150,6 @@ function DetailPasienTemplate(props) {
           </span>
         </div>
         <div className="flex flex-col text-THEME_COLOR my-1 px-3 w-1/2">
-          <span className="font-medium text-base">Golongan Darah</span>
-          <span className="font-bold text-xl">
-            {props.data.golongan_darah === undefined
-              ? "-"
-              : props.data.golongan_darah}
-          </span>
-        </div>
-        <div className="flex flex-col text-THEME_COLOR my-1 px-3 w-1/2">
           <span className="font-medium text-base">Pekerjaan</span>
           <span className="font-bold text-xl">
             {props.data.pekerjaan === undefined ? "-" : props.data.pekerjaan}
